@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World of Wonder – Roses | Reading & Quiz</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES – Tone màu hồng/đỏ pastel chủ đạo
+   ============================================================ */
+:root {
+  --sage:      #d65c70;       /* hồng đậm / đỏ hoa hồng nhạt */
+  --mint:      #fce2e5;       /* hồng nhạt pastel */
+  --cream:     #fff5f5;       /* kem hồng - nền chính */
+  --butter:    #ffebf0;       /* hồng phấn */
+  --peach:     #f5c6cb;       /* đào / hồng cam */
+  --lavender:  #e5c9d3;       /* hồng tím mộng mơ */
+  --rose:      #c91834;       /* đỏ rực - điểm nhấn mạnh */
+  --brown:     #592a31;       /* đỏ mận tối - text */
+  --dark:      #4a1c24;       /* nâu đỏ tối */
+  --accent:    #b3001b;       /* đỏ đậm - điểm nhấn */
+  --white:     #fff;
+  --radius:    16px;
+  --shadow:    0 4px 24px rgba(200, 50, 50, .06);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   DECORATIVE LEAF SVG – dùng lại nhiều chỗ
+   ============================================================ */
+.leaf-divider {
+  text-align: center;
+  margin: 2rem 0;
+  opacity: .7;
+  font-size: 1.6rem;
+  letter-spacing: .5rem;
+  color: var(--sage);
+}
+
+/* ============================================================
+   HERO HEADER
+   ============================================================ */
+header {
+  position: relative;
+  background: linear-gradient(135deg, #ffc4cf 0%, #ffebf0 50%, #f5c6cb 100%);
+  padding: 4rem 2rem 6rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Vòng tròn trang trí nền */
+header::before,
+header::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: .25;
+}
+header::before { width: 420px; height: 420px; background: var(--sage);   top: -180px; left: -100px; }
+header::after  { width: 300px; height: 300px; background: var(--peach); bottom: -120px; right: -80px; }
+
+/* Cánh hoa hồng bay khắp nền header */
+.dandelion-float {
+  position: absolute;
+  pointer-events: none;
+  animation: floatUp 8s ease-in-out infinite;
+  opacity: 0;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: .7; }
+  90%  { opacity: .5; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+.subtitle {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  color: var(--brown);
+  letter-spacing: .08rem;
+  margin-bottom: .5rem;
+  animation: fadeDown .8s ease both;
+}
+
+h1.main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--accent);
+  line-height: 1.15;
+  animation: fadeDown 1s .2s ease both;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h1.main-title span { color: var(--sage); font-style: italic; text-transform: lowercase; }
+
+.hero-desc {
+  max-width: 620px;
+  margin: 1.2rem auto 0;
+  color: #70333d;
+  font-size: 1.05rem;
+  animation: fadeDown 1s .4s ease both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   NAV BAR
+   ============================================================ */
+nav {
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(214, 92, 112, .2);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  padding: .6rem 1.5rem;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+
+nav a {
+  text-decoration: none;
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--brown);
+  white-space: nowrap;
+  transition: background .25s, color .25s;
+  letter-spacing: .03rem;
+}
+nav a:hover, nav a.active {
+  background: var(--sage);
+  color: var(--white);
+}
+
+/* ============================================================
+   LAYOUT WRAPPER
+   ============================================================ */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+}
+
+/* Section heading style chung */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--brown);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 1em;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   CARD COMPONENT
+   ============================================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(200,50,50,.12); }
+
+/* ============================================================
+   READING CONTENT SECTIONS
+   ============================================================ */
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Màu nền xen kẽ cho các card */
+.card-sage     { background: linear-gradient(135deg, #fff0f2, #fff); border-top: 4px solid var(--sage); }
+.card-butter   { background: linear-gradient(135deg, #fff5f8, #fff); border-top: 4px solid #f08a9c; }
+.card-peach    { background: linear-gradient(135deg, #ffede8, #fff); border-top: 4px solid var(--peach); }
+.card-lavender { background: linear-gradient(135deg, #f7eff2, #fff); border-top: 4px solid var(--lavender); }
+.card-rose     { background: linear-gradient(135deg, #fff0f0, #fff); border-top: 4px solid var(--rose); }
+.card-mint     { background: linear-gradient(135deg, #fceef0, #fff); border-top: 4px solid var(--mint); }
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--brown);
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.card p { font-size: .96rem; color: #5c3036; }
+.card ul { padding-left: 1.2rem; color: #5c3036; font-size: .96rem; }
+.card ul li { margin-bottom: .35rem; }
+
+/* Taxonomy table */
+.tax-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.tax-table td { padding: .4rem .6rem; border-bottom: 1px solid #f0d8dc; color: #5c3036; }
+.tax-table td:first-child { font-weight: 700; color: var(--brown); width: 40%; }
+
+/* Anatomy diagram */
+.anatomy-section {
+  background: linear-gradient(135deg, #fff5f6, #ffeff2);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.anatomy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+@media (max-width: 600px) { .anatomy-grid { grid-template-columns: 1fr; } }
+
+.anatomy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  background: rgba(255,255,255,.7);
+  padding: .8rem;
+  border-radius: 10px;
+}
+.anatomy-item .icon { font-size: 1.4rem; flex-shrink: 0; }
+.anatomy-item h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--brown); margin-bottom: .2rem; }
+.anatomy-item p { font-size: .87rem; color: #7a464f; }
+
+/* ============================================================
+   ILLUSTRATED PLANT CARD
+   ============================================================ */
+.plant-illustration {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(160deg, #ffe6eb, #fff5f5);
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+}
+
+/* ============================================================
+   FACT BUBBLES
+   ============================================================ */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.fact-bubble {
+  background: var(--butter);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  font-size: .9rem;
+  color: #5c3036;
+  position: relative;
+  border-left: 4px solid var(--sage);
+  transition: transform .25s;
+}
+.fact-bubble:hover { transform: scale(1.03); }
+.fact-bubble::before { content: '🌹'; position: absolute; top: -12px; right: 12px; font-size: 1.3rem; }
+
+/* List */
+.pesticide-list {
+  list-style: none;
+  padding: 0;
+}
+.pesticide-list li {
+  padding: .6rem .8rem;
+  margin-bottom: .5rem;
+  background: #fff5f5;
+  border-radius: 8px;
+  border-left: 4px solid var(--rose);
+  font-size: .94rem;
+  color: #5c3036;
+}
+.pesticide-list li::before { content: '💧 '; }
+
+/* ============================================================
+   VOCABULARY TABLE
+   ============================================================ */
+#vocab { background: linear-gradient(135deg, #fff0f2 0%, #ffeff4 100%); border-radius: var(--radius); padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+.vocab-table-wrap { overflow-x: auto; }
+table.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .93rem;
+  min-width: 700px;
+}
+.vocab-table thead tr {
+  background: var(--sage);
+  color: var(--white);
+}
+.vocab-table thead th { padding: .75rem 1rem; text-align: left; font-weight: 700; letter-spacing: .04rem; }
+.vocab-table tbody tr { border-bottom: 1px solid #f5d3d8; transition: background .2s; }
+.vocab-table tbody tr:nth-child(even) { background: rgba(252,226,229,.3); }
+.vocab-table tbody tr:hover { background: rgba(214,92,112,.15); }
+.vocab-table tbody td { padding: .65rem 1rem; color: #5c3036; vertical-align: top; }
+.vocab-table tbody td:first-child { font-weight: 700; color: var(--brown); white-space: nowrap; }
+.vocab-table tbody td:nth-child(2) { color: #8a414e; font-style: italic; }
+.vocab-table tbody td:nth-child(3) { color: var(--accent); font-weight: 700; }
+.vocab-table tbody td:last-child { font-size: .87rem; }
+
+/* ============================================================
+   QUIZ SECTION
+   ============================================================ */
+#quiz { background: linear-gradient(135deg, #fdf2f5, #fff5f5); border-radius: var(--radius); padding: 2.5rem 2rem; }
+
+.quiz-btn-wrap { text-align: center; margin-bottom: 2rem; }
+
+.btn {
+  display: inline-block;
+  padding: .9rem 2.4rem;
+  border-radius: 999px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: transform .2s, box-shadow .2s, background .2s;
+  letter-spacing: .04rem;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(200,50,50,.15); }
+.btn:active { transform: scale(.97); }
+
+.btn-primary { background: var(--sage); color: var(--white); }
+.btn-accent  { background: var(--accent); color: var(--white); }
+.btn-mint    { background: var(--mint); color: var(--brown); }
+
+/* Quiz card */
+.quiz-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  margin-bottom: 1.2rem;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.quiz-card.visible { opacity: 1; transform: translateY(0); }
+
+.quiz-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--brown);
+  margin-bottom: 1rem;
+}
+.quiz-q span.qnum {
+  display: inline-block;
+  background: var(--sage);
+  color: var(--white);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: .85rem;
+  font-weight: 700;
+  margin-right: .5rem;
+  vertical-align: middle;
+}
+
+.options { display: flex; flex-direction: column; gap: .55rem; }
+.option-btn {
+  background: #fffafa;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: .65rem 1rem;
+  text-align: left;
+  font-size: .93rem;
+  color: #5c3036;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .15s;
+  font-family: 'Lato', sans-serif;
+}
+.option-btn:hover:not(:disabled) { background: var(--mint); border-color: var(--sage); transform: translateX(4px); }
+.option-btn.correct { background: #e0f2dc; border-color: #6abf40; color: #2a5c10; }
+.option-btn.wrong   { background: #ffe6e6; border-color: #d04040; color: #7a0000; }
+.option-btn:disabled { cursor: default; }
+
+.feedback { margin-top: .7rem; font-size: .9rem; font-weight: 700; padding: .4rem .8rem; border-radius: 8px; display: inline-block; }
+.feedback.ok  { background: #e0f2dc; color: #2a5c10; }
+.feedback.no  { background: #ffe6e6; color: #7a0000; }
+
+/* Score */
+.score-box {
+  background: linear-gradient(135deg, var(--sage), #b33951);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  display: none;
+  animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn {
+  from { transform: scale(.8); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+.score-box h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: .5rem; }
+.score-box p  { font-size: 1.1rem; opacity: .9; }
+.score-number { font-size: 4rem; font-weight: 700; line-height: 1; }
+
+/* ============================================================
+   RELATED PLANTS SECTION
+   ============================================================ */
+.plants-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+.plant-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform .3s;
+}
+.plant-card:hover { transform: translateY(-5px); }
+.plant-card .plant-emoji { font-size: 3rem; margin-bottom: .5rem; }
+.plant-card h4 { font-family: 'Playfair Display', serif; color: var(--brown); font-size: 1.1rem; }
+.plant-card p  { font-size: .87rem; color: #7a464f; margin-top: .4rem; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,.8);
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  font-size: .88rem;
+}
+footer span { color: var(--mint); }
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE TWEAKS
+   ============================================================ */
+@media (max-width: 700px) {
+  .container { padding: 2rem 1rem; }
+  .anatomy-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="seeds-container"></div>
+
+<header id="top">
+  <p class="subtitle">🌹 World of Wonder – Reading Website</p>
+  <h1 class="main-title">Ro<span>se</span>s</h1>
+  <p class="hero-desc">Exploring the realms of history, science, nature and technology — Khám phá Nữ hoàng của các loài hoa!</p>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#intro">Giới thiệu</a>
+    <a href="#word">Từ nguyên</a>
+    <a href="#language">Ngôn ngữ</a>
+    <a href="#anatomy">Giải phẫu</a>
+    <a href="#history">Lịch sử</a>
+    <a href="#types">Phân loại</a>
+    <a href="#facts">Sự thật thú vị</a>
+    <a href="#wild">Hoa dại</a>
+    <a href="#perfume">Nước hoa</a>
+    <a href="#vocab">Từ vựng 📚</a>
+    <a href="#quiz">Quiz 🎯</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <section id="intro" class="reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">Hoa Hồng – Biểu Tượng Của Cái Đẹp</h2>
+
+    <div class="plant-illustration" style="margin-bottom:1.5rem;">
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/022/246/027/small/watercolor-floral-bouquet-composition-with-red-roses-transparent-background-generative-ai-png.png" alt="Red Roses Watercolor" style="max-height: 280px; width: auto; object-fit: contain; filter: drop-shadow(0px 10px 15px rgba(200,0,0,0.1));">
+      <p style="font-size:.85rem;color:#8a414e;margin-top:.5rem;font-style:italic;">Hoa hồng – Biểu tượng vượt thời gian của tình yêu và sự trù phú</p>
+    </div>
+
+    <div class="card" style="max-width:760px;margin:auto;background:linear-gradient(135deg,#fff5f6,#ffeff2);">
+      <p>One of the most loved flowers, the rose is symbol of <strong>beauty, love, peace and the lushness of nature</strong>. These prickly shrubs with their fragrant flowers have been around for about 35 million years. People began cultivating roses in Asia 5,000 years ago, and since then, thousands of varieties have been developed.</p>
+      <br>
+      <p style="color:#70333d;font-style:italic;">Là một trong những loài hoa được yêu thích nhất, hoa hồng là biểu tượng của vẻ đẹp, tình yêu, hòa bình và sự trù phú của thiên nhiên. Những bụi cây có gai với những bông hoa thơm ngát này đã tồn tại khoảng 35 triệu năm. Con người bắt đầu trồng hoa hồng ở châu Á 5.000 năm trước, và từ đó, hàng ngàn giống loài đã được phát triển.</p>
+    </div>
+  </section>
+
+  <div class="leaf-divider">🌿 · 🌹 · 🌿</div>
+
+  <div class="reading-grid reveal" style="margin-bottom:3rem;" id="word">
+
+    <div class="card card-butter">
+      <h3>📖 In a Word — Từ Nguyên</h3>
+      <p>The word <strong>"rose"</strong> came into use in Old English, and can trace its roots to the Latin <em>rosa</em>.</p>
+      <br>
+      <p>It may be derived from the Greek word <em>"rhodon"</em>.</p>
+    </div>
+
+    <div class="card card-mint" id="language">
+      <h3>💬 Language of Roses — Ngôn ngữ loài hoa</h3>
+      <table class="tax-table">
+        <tr><td>❤️ Red rose</td><td>A symbol of love and passion. (Tình yêu và đam mê)</td></tr>
+        <tr><td>🌸 Pink rose</td><td>Symbolizes thanks or congratulations. (Sự biết ơn/chúc mừng)</td></tr>
+        <tr><td>💛 Yellow rose</td><td>A symbol of friendship. (Tình bạn)</td></tr>
+        <tr><td>🧡 Orange rose</td><td>Symbolizes enthusiasm. (Sự nhiệt huyết)</td></tr>
+        <tr><td>🤍 White rose</td><td>Symbolizes purity. (Sự thuần khiết)</td></tr>
+      </table>
+      <p style="margin-top:.9rem;font-size:.9rem;">Màu sắc của hoa hồng đã trở thành biểu tượng cho những cảm xúc khác nhau của con người.</p>
+    </div>
+
+  </div>
+
+  <section id="anatomy" class="anatomy-section reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">🌸 Anatomy 101 — Cấu Tạo Hoa Hồng</h2>
+    <div class="anatomy-grid">
+      <div class="anatomy-item">
+        <span class="icon">🌺</span>
+        <div>
+          <h4>Corolla & Petals — Tràng hoa & Cánh hoa</h4>
+          <p>The corolla is the whorl of petals. This is the colorful, fragrant part of the flower.</p>
+        </div>
+      </div>
+      <div class="anatomy-item">
+        <span class="icon">🌿</span>
+        <div>
+          <h4>Sepal & Penduncle — Lá đài & Cuống hoa</h4>
+          <p>Sepals protect the bud before it opens. The penduncle is the stem of the flower.</p>
+        </div>
+      </div>
+      <div class="anatomy-item">
+        <span class="icon">✨</span>
+        <div>
+          <h4>Anther & Filament — Bao phấn & Chỉ nhị</h4>
+          <p>Parts of the stamen responsible for producing and supporting pollen.</p>
+        </div>
+      </div>
+      <div class="anatomy-item">
+        <span class="icon">🍓</span>
+        <div>
+          <h4>Rose Hip — Quả giả (Quả hồng)</h4>
+          <p>The part left on the plant after blooming. Rich in Vitamin C, used to help manage diabetes and boost immunity.</p>
+        </div>
+      </div>
+      <div class="anatomy-item">
+        <span class="icon">🗡️</span>
+        <div>
+          <h4>Prickle (Thorn) — Gai</h4>
+          <p>Sickle-shaped hooks that help the rose climb and hang onto other vegetation when growing over it.</p>
+        </div>
+      </div>
+      <div class="anatomy-item">
+        <span class="icon">🍃</span>
+        <div>
+          <h4>Leaflets & Stipule — Lá chét & Lá kèm</h4>
+          <p>Compound leaves are made up of several leaflets. Leaflets usually have a serrated (toothed) edge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="history" class="reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">🏛️ Looking Back — Lịch sử & Thần thoại</h2>
+    <div class="reading-grid">
+      <div class="card card-sage">
+        <h3>🏛️ Ancient Times</h3>
+        <p><strong>Greeks:</strong> Used roses as accessories. On festive occasions, they would adorn themselves with garlands of roses.</p>
+        <p style="margin-top:.5rem;"><strong>Romans:</strong> Legend says white roses grew where the tears of Venus (goddess of love) fell as she mourned Adonis. Cupid gave Harpocrates (god of silence) a rose to keep her secrets.</p>
+        <p style="margin-top:.5rem;"><strong>Egypt:</strong> Cleopatra used rose fragrance and covered banquet tables and floors in rose petals when entertaining Mark Antony.</p>
+      </div>
+      <div class="card card-lavender">
+        <h3>⚔️ Religion & Wars</h3>
+        <p><strong>Early Christianity:</strong> The five petals symbolized the five wounds of Christ, and the red color was the blood of martyrs. The rose is associated with the Virgin Mary.</p>
+        <p style="margin-top:.5rem;"><strong>War of the Roses (1455-1485):</strong> A series of civil wars over the throne of England. The house of Lancaster used the red rose symbol, and the house of York used a white rose.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="types" class="reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">🌹 Rose Types — Phân Loại Hoa Hồng</h2>
+    <div class="reading-grid">
+      <div class="card card-peach">
+        <h3>⏳ Old Garden Roses</h3>
+        <ul>
+          <li>Also known as antique or heritage roses.</li>
+          <li>Grown prior to 1867.</li>
+          <li>Some date back to the ancient Romans.</li>
+          <li>Known for their beautiful fragrance and variety of colors.</li>
+        </ul>
+      </div>
+      <div class="card card-mint">
+        <h3>🆕 Modern Roses</h3>
+        <ul>
+          <li><strong>Hybrid tea roses:</strong> Have a single blossom on a long stem; a favorite for cut flowers.</li>
+          <li><strong>Floribunda roses:</strong> Produce abundant clusters of small flowers.</li>
+          <li><strong>Climbing roses:</strong> Mutations that produce long canes that ramble over trees or supports.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="leaf-divider">🍃 · 🌹 · 🍃</div>
+
+  <section id="facts" class="reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">💡 Did You Know? — Bạn Có Biết?</h2>
+    <div class="facts-grid">
+      <div class="fact-bubble"><strong>Shakespeare</strong> refers to roses more than 50 times in his writings.</div>
+      <div class="fact-bubble">The great Chinese philosopher <strong>Confucius</strong> is said to have had 600 books on caring for roses.</div>
+      <div class="fact-bubble">The world's oldest living rose bush is thought to be <strong>1,000 years old</strong> (Hildesheim Cathedral in Germany).</div>
+      <div class="fact-bubble">Napoleon's wife, <strong>Josephine</strong>, grew more than 250 varieties of roses.</div>
+      <div class="fact-bubble"><strong>Rose hips</strong> are rich in Vitamin C, A, D, and E. They can be used to make jams and teas.</div>
+      <div class="fact-bubble"><strong>Samuel de Champlain</strong> brought the first cultivated roses to North America in the 17th century.</div>
+      <div class="fact-bubble"><strong>Belinda's Dream</strong> was first cultivated in 1992 (a cross between Tiffany and Jersey Beauty).</div>
+      <div class="fact-bubble"><strong>The Othello rose</strong> is a hybrid variety with large red flowers that slowly turn purple with age.</div>
+    </div>
+  </section>
+
+  <section id="perfume" class="reveal" style="margin-bottom:3rem;">
+    <h2 class="section-title">✨ Wild Roses & DIY Perfume</h2>
+    <div class="reading-grid">
+      <div class="card" style="background:linear-gradient(135deg,#fffafa,#ffeff2);">
+        <h3>🌿 True Wild Roses</h3>
+        <p>True wild roses have exactly <strong>five petals</strong> and occur naturally. They are native to North America, Europe and Asia.</p>
+        <p style="margin-top:.8rem;">The wild rose produces fragrant flowers once a year in spring. It is the original ancestor of all rose varieties.</p>
+        <p style="margin-top:.8rem;color:#8a414e;"><em>Note: Fungal diseases may cause yellowing leaves. Spider mites like to feed on the leaves.</em></p>
+      </div>
+
+      <div class="card card-rose">
+        <h3>🧪 Rose Petal Perfume Recipe</h3>
+        <ul class="pesticide-list">
+          <li><strong>Step 1:</strong> Bring 2 cups of water to a boil. Turn off heat.</li>
+          <li><strong>Step 2:</strong> Add 2 cups of fresh rose petals and let steep until water is cool.</li>
+          <li><strong>Step 3:</strong> Strain the water into a glass bowl. Squeeze liquid out of petals.</li>
+          <li><strong>Step 4:</strong> Add a drop of red food coloring and essential rose oil. Stir.</li>
+          <li><strong>Step 5:</strong> Pour into a clean bottle. Store in a cool, dark place (keeps for ~2 weeks).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="leaf-divider">🌼 · 🌿 · 🌼</div>
+
+  <section id="vocab" class="reveal" style="margin-bottom:3rem;">
+    <div id="vocab-inner">
+      <h2 class="section-title">📚 Vocabulary — Từ Vựng (20 Từ)</h2>
+      <p style="margin-bottom:1.5rem;color:#8a414e;font-size:.94rem;">Bảng 20 từ vựng tiếng Anh kèm nghĩa tiếng Việt, loại từ và câu ví dụ từ bài đọc.</p>
+      <div class="vocab-table-wrap">
+        <table class="vocab-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>English</th>
+              <th>Tiếng Việt</th>
+              <th>Loại từ</th>
+              <th>Ví dụ từ bài (Example Sentence)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>cultivate</td><td>trồng trọt, canh tác</td><td>v.</td><td>People began cultivating roses in Asia 5,000 years ago.</td></tr>
+            <tr><td>2</td><td>lushness</td><td>sự trù phú, tươi tốt</td><td>n.</td><td>The rose is symbol of beauty, love, peace and the lushness of nature.</td></tr>
+            <tr><td>3</td><td>fragrant</td><td>thơm ngát</td><td>adj.</td><td>These prickly shrubs with their fragrant flowers have been around for millions of years.</td></tr>
+            <tr><td>4</td><td>derive</td><td>bắt nguồn từ</td><td>v.</td><td>It may be derived from the Greek word "rhodon".</td></tr>
+            <tr><td>5</td><td>symbolic</td><td>mang tính biểu tượng</td><td>adj.</td><td>The colors of roses have come to be symbolic for human emotions.</td></tr>
+            <tr><td>6</td><td>passion</td><td>sự đam mê / nhiệt huyết</td><td>n.</td><td>The red rose is a symbol of love and passion.</td></tr>
+            <tr><td>7</td><td>adorn</td><td>tô điểm, trang trí</td><td>v.</td><td>They would adorn themselves with garlands of roses.</td></tr>
+            <tr><td>8</td><td>garland</td><td>vòng hoa</td><td>n.</td><td>They would adorn themselves with garlands of roses.</td></tr>
+            <tr><td>9</td><td>mourn</td><td>thương tiếc, khóc than</td><td>v.</td><td>Tears fell as Venus mourned the loss of her beloved Adonis.</td></tr>
+            <tr><td>10</td><td>martyr</td><td>người tử vì đạo / liệt sĩ</td><td>n.</td><td>The red color was the blood of martyrs.</td></tr>
+            <tr><td>11</td><td>abundant</td><td>dồi dào, nhiều</td><td>adj.</td><td>Floribunda roses produce abundant clusters of small flowers.</td></tr>
+            <tr><td>12</td><td>mutation</td><td>sự đột biến</td><td>n.</td><td>Climbing roses are mutations that produce long canes.</td></tr>
+            <tr><td>13</td><td>ramble</td><td>mọc lan tràn, leo leo</td><td>v.</td><td>Canes that ramble over trees or man-made supports.</td></tr>
+            <tr><td>14</td><td>corolla</td><td>tràng hoa</td><td>n.</td><td>The corolla is the whorl of petals.</td></tr>
+            <tr><td>15</td><td>sepal</td><td>lá đài</td><td>n.</td><td>Sepals protect the bud before it opens.</td></tr>
+            <tr><td>16</td><td>stipule</td><td>lá kèm</td><td>n.</td><td>Anatomy 101: Leaflets usually have a serrated edge, near the stipule.</td></tr>
+            <tr><td>17</td><td>prickle</td><td>gai</td><td>n.</td><td>The sickle-shaped hooks of the prickles help the rose climb.</td></tr>
+            <tr><td>18</td><td>serrated</td><td>có hình răng cưa</td><td>adj.</td><td>Leaflets usually have a serrated edge.</td></tr>
+            <tr><td>19</td><td>immunity</td><td>hệ miễn dịch</td><td>n.</td><td>Rose hips have been used to boost immunity.</td></tr>
+            <tr><td>20</td><td>ancestor</td><td>tổ tiên, nguồn gốc</td><td>n.</td><td>The wild rose is the original ancestor of all rose varieties.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" class="reveal">
+    <h2 class="section-title">🎯 Reading Quiz — Trắc Nghiệm</h2>
+    <p style="margin-bottom:1.5rem;color:#8a414e;font-size:.94rem;">10 câu trắc nghiệm kiểm tra kiến thức bài đọc — nhấn nút để bắt đầu!</p>
+
+    <div class="quiz-btn-wrap">
+      <button class="btn btn-primary" id="startQuizBtn" onclick="startQuiz()">🌹 Start Quiz / Bắt đầu</button>
+    </div>
+
+    <div id="quizContainer"></div>
+    <div class="quiz-btn-wrap" id="submitWrap" style="display:none;">
+      <button class="btn btn-accent" onclick="submitQuiz()">✅ Submit Answers / Nộp bài</button>
+    </div>
+
+    <div class="score-box" id="scoreBox">
+      <p>Your Score — Kết quả của bạn</p>
+      <div class="score-number" id="scoreNum">0/10</div>
+      <p id="scoreMsg"></p>
+      <br>
+      <button class="btn btn-mint" onclick="resetQuiz()" style="margin-top:.5rem;">🔄 Try Again / Làm lại</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>🌹 <span>World of Wonder – Roses</span> · Reading & Vocabulary Website</p>
+  <p style="margin-top:.5rem;font-size:.8rem;">Nội dung dành cho mục đích học tập · Educational purposes only</p>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────
+   1. FLOATING ROSE PETALS IN HEADER
+   ────────────────────────────────────────────────────── */
+(function createSeeds() {
+  const container = document.getElementById('seeds-container');
+  const seedEmojis = ['🌹', '🥀', '❤️', '✨'];
+
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('span');
+    el.className = 'dandelion-float';
+    el.textContent = seedEmojis[i % seedEmojis.length];
+    el.style.cssText = `
+      left: ${Math.random() * 100}%;
+      bottom: -30px;
+      font-size: ${1 + Math.random() * 1.5}rem;
+      animation-delay: ${Math.random() * 8}s;
+      animation-duration: ${6 + Math.random() * 5}s;
+    `;
+    container.appendChild(el);
+  }
+})();
+
+/* ──────────────────────────────────────────────────────
+   2. SCROLL REVEAL ANIMATION
+   ────────────────────────────────────────────────────── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target); 
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ──────────────────────────────────────────────────────
+   3. ACTIVE NAV HIGHLIGHT
+   ────────────────────────────────────────────────────── */
+const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll('section[id], div[id]');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => navObserver.observe(s));
+
+/* ──────────────────────────────────────────────────────
+   4. QUIZ DATA — 10 câu hỏi trắc nghiệm
+   ────────────────────────────────────────────────────── */
+const quizData = [
+  {
+    q: "Approximately how many years ago did people begin cultivating roses in Asia?",
+    options: ["1,000 years ago", "5,000 years ago", "35 million years ago", "1867"],
+    answer: 1,
+    explain: "People began cultivating roses in Asia 5,000 years ago."
+  },
+  {
+    q: "Which word might the name 'rose' be derived from in Greek?",
+    options: ["Rosa", "Dent-de-lion", "Rhodon", "Corolla"],
+    answer: 2,
+    explain: "It may be derived from the Greek word 'rhodon'."
+  },
+  {
+    q: "According to the Language of Roses, what does a yellow rose symbolize?",
+    options: ["Love and passion", "Purity", "Thanks or congratulations", "Friendship"],
+    answer: 3,
+    explain: "A yellow rose is a symbol of friendship."
+  },
+  {
+    q: "Who is said to have covered banquet tables and floors in rose petals?",
+    options: ["Cleopatra", "Venus", "Virgin Mary", "Josephine"],
+    answer: 0,
+    explain: "Cleopatra is said to have used rose fragrance and covered tables/floors in petals when she entertained Mark Antony."
+  },
+  {
+    q: "What is the part left on the plant after a rose is done blooming called?",
+    options: ["Sepal", "Rose hip", "Prickle", "Leaflet"],
+    answer: 1,
+    explain: "Rose hips are the part left on the plant after blooming, rich in Vitamin C."
+  },
+  {
+    q: "How old is the world's oldest living rose bush thought to be?",
+    options: ["250 years old", "500 years old", "1,000 years old", "5,000 years old"],
+    answer: 2,
+    explain: "The world's oldest living rose bush is thought to be 1,000 years old (at Hildesheim Cathedral)."
+  },
+  {
+    q: "How many petals do 'true wild roses' naturally have?",
+    options: ["Five", "Ten", "Fifty", "They vary wildly"],
+    answer: 0,
+    explain: "True wild roses have five petals and occur naturally."
+  },
+  {
+    q: "What is the function of the sickle-shaped hooks known as 'prickles'?",
+    options: ["To produce seeds", "To help the rose climb and hang onto vegetation", "To protect the bud", "To produce fragrance"],
+    answer: 1,
+    explain: "Prickles help the rose climb and hang onto other vegetation when growing over it."
+  },
+  {
+    q: "Which modern rose type is a favorite for cut flowers because it has a single blossom on a long stem?",
+    options: ["Old garden roses", "Floribunda roses", "Climbing roses", "Hybrid tea roses"],
+    answer: 3,
+    explain: "Hybrid tea roses have a single blossom on a long stem, making them a favorite for cut flower arrangements."
+  },
+  {
+    q: "Which historical figure's wife (Josephine) grew more than 250 varieties of roses?",
+    options: ["Mark Antony", "Confucius", "Napoleon", "Shakespeare"],
+    answer: 2,
+    explain: "Napoleon's wife, Josephine, grew more than 250 varieties of roses."
+  }
+];
+
+let quizStarted = false;
+let userAnswers = new Array(10).fill(null);
+
+function startQuiz() {
+  document.getElementById('startQuizBtn').style.display = 'none';
+  document.getElementById('scoreBox').style.display   = 'none';
+  document.getElementById('submitWrap').style.display = 'block';
+
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  userAnswers = new Array(10).fill(null);
+
+  quizData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = `qcard-${idx}`;
+
+    const opts = item.options.map((opt, oi) =>
+      `<button class="option-btn" id="opt-${idx}-${oi}" onclick="selectAnswer(${idx}, ${oi})">${String.fromCharCode(65+oi)}. ${opt}</button>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="quiz-q"><span class="qnum">${idx+1}</span>${item.q}</div>
+      <div class="options" id="opts-${idx}">${opts}</div>
+      <div class="feedback" id="fb-${idx}" style="display:none;"></div>
+    `;
+    container.appendChild(card);
+
+    setTimeout(() => card.classList.add('visible'), idx * 80);
+  });
+}
+
+function selectAnswer(qIdx, oIdx) {
+  userAnswers[qIdx] = oIdx;
+  document.querySelectorAll(`#opts-${qIdx} .option-btn`).forEach((btn, i) => {
+    btn.style.background = i === oIdx ? 'var(--mint)' : '';
+    btn.style.borderColor = i === oIdx ? 'var(--sage)' : '';
+  });
+}
+
+function submitQuiz() {
+  let score = 0;
+  quizData.forEach((item, idx) => {
+    const chosen = userAnswers[idx];
+    const opts   = document.querySelectorAll(`#opts-${idx} .option-btn`);
+    const fb     = document.getElementById(`fb-${idx}`);
+
+    opts.forEach(btn => { btn.disabled = true; btn.style.background = ''; btn.style.borderColor = ''; });
+
+    if (chosen === null) {
+      fb.textContent = '⚪ You did not answer this question.';
+      fb.className   = 'feedback no';
+    } else if (chosen === item.answer) {
+      opts[chosen].classList.add('correct');
+      fb.textContent = '✅ Correct! — ' + item.explain;
+      fb.className   = 'feedback ok';
+      score++;
+    } else {
+      opts[chosen].classList.add('wrong');
+      opts[item.answer].classList.add('correct');
+      fb.textContent = '❌ Wrong. ' + item.explain;
+      fb.className   = 'feedback no';
+    }
+    fb.style.display = 'block';
+  });
+
+  document.getElementById('submitWrap').style.display = 'none';
+
+  const box = document.getElementById('scoreBox');
+  box.style.display  = 'block';
+  document.getElementById('scoreNum').textContent = `${score}/10`;
+
+  let msg = '';
+  if (score === 10) msg = '🏆 Perfect! Xuất sắc! You are a Rose Expert!';
+  else if (score >= 8) msg = '🌟 Great job! Rất tốt! Almost perfect!';
+  else if (score >= 6) msg = '👍 Good effort! Không tệ! Keep reading!';
+  else if (score >= 4) msg = '📖 Keep trying! Cần cố gắng thêm. Review the reading!';
+  else msg = '🌱 Don\'t give up! Đừng nản lòng. Read the article again and retry!';
+
+  document.getElementById('scoreMsg').textContent = msg;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  document.getElementById('scoreBox').style.display    = 'none';
+  document.getElementById('quizContainer').innerHTML   = '';
+  document.getElementById('submitWrap').style.display  = 'none';
+  document.getElementById('startQuizBtn').style.display = 'inline-block';
+}
+</script>
+
+</body>
+</html>
